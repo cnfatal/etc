@@ -12,7 +12,7 @@ RECORED_LIST_PATH=Record.List
 RECORED_UPDATE_PATH=Record.Modify
 
 getExternalIP(){
-    curl -s https://api.myip.com | jq  -r '.ip'
+    curl -s http://ip-api.com/json | jq  -r '.query'
 }
 
 getRecord(){
