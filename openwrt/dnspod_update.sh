@@ -1,13 +1,10 @@
 #!/bin/sh
-·
-####----------- configuration --------
-LOGIN_TOKEN=<id,secret>
-DOMAIN=<TOP_LEVEL_DOMAIN>
-SUB_DOMAIN=<SUB_DOMAIN>
-####----------- configuration --------
+
+LOGIN_TOKEN="id,token"
+DOMAIN=""
+SUB_DOMAIN="@"
 
 DNSPOD_HOST=https://dnsapi.cn
-DOMAIN_LIST_PATH=Domain.List
 RECORED_LIST_PATH=Record.List
 RECORED_UPDATE_PATH=Record.Modify
 
@@ -26,9 +23,9 @@ updateRecord(){
 record=$(getRecord)
 externalIP=$(getExternalIP)
 
-if [ $(echo $record|jq -r '.value') != $externalIP ] ; then
-    echo "dns record value [$(echo $record | jq -r .value )] is out of date, updating to [$externalIP]"
-    updateRecord $(echo $record|jq -r .id) ${externalIP}
+if [ "$(echo "$record"|jq -r '.value')" != "$externalIP" ] ; then
+    echo "dns record value [$(echo "$record" | jq -r .value )] is out of date, updating to [$externalIP]"
+    updateRecord "$(echo "$record"|jq -r .id)" "${externalIP}"
     else
-    echo "dns record value [$(echo $record | jq -r .value )] is up to date, nothing todo"
+    echo "dns record value [$(echo "$record" | jq -r .value )] is up to date, nothing todo"
 fi
