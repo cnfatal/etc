@@ -41,7 +41,7 @@ spec:
               mountPath: /usr/share/nginx/html
               mountPropagation: HostToContainer
         - name: s3f3
-          image: internal-registry.ghostcloud.cn/library/f3fs:v1.85
+          image: docker.io/fatalc/s3fs:v1.85
           imagePullPolicy: Always
           securityContext:
             privileged: true
