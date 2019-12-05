@@ -1,5 +1,9 @@
 # 使用s3fs转s3为文件系统
 
+## 参考
+
+[s3fs-fuse](https://github.com/s3fs-fuse/s3fs-fuse)
+
 ## 实验环境
 
 ### fakes3
@@ -25,7 +29,7 @@ s3fs bucket /mnt/s3fs -o passwd_file=${HOME}/.passwd-s3fs -o url=http://172.16.0
 
 ### 镜像
 
-[README.md](./s3fs/README.md)
+[README.md](s3fs-build/README.md)
 
 ### 部署示例
 

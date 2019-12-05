@@ -3,44 +3,38 @@ kind: ConfigMap
 metadata:
   name: s3fs-config
 data:
-  S3_ENDPOINT: "http://192.168.2.18:4567"
-  AWS_ACCESS_KEY_ID: "123"
-  AWS_SECRET_ACCESS_KEY: password
-  S3_BUCKET: bucket
+  S3_ENDPOINT: "http://oss-cn-north-1.unicloudsrv.com"
+  S3_ACCESS_KEY: "<16 chars access key>"
+  S3_SECRET_KEY: "<32 chars secret key>"
+  S3_BUCKET_NAME: "aidptest"
+  S3_BUCKET_PATH: "/nginx"
   S3_EXTRAVARS: ",use_path_request_style"
   MOUNT_POINT: /mnt/data
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-s3
+  name: nginx
   labels:
-    app: nginx-s3
+    app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-s3
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-s3
+        app: nginx
     spec:
       containers:
         - name: nginx
           image: nginx:alpine
-          resources:
-            limits:
-              cpu: 1
-              memory: 512Mi
-            requests:
-              cpu: 1
-              memory: 512Mi
           volumeMounts:
             - name: data
               mountPath: /usr/share/nginx/html
               mountPropagation: HostToContainer
-        - name: s3f3
+        - name: s3f3-sidecar
           image: docker.io/fatalc/s3fs:v1.85
           imagePullPolicy: Always
           securityContext:
@@ -55,15 +49,21 @@ spec:
             - name: data
               mountPath: /mnt/data
               mountPropagation: Bidirectional
-          resources:
-            limits:
-              cpu: 1
-              memory: 512Mi
-            requests:
-              cpu: 1
-              memory: 512Mi
       volumes:
         - name: data
           emptyDir: {}
       dnsPolicy: ClusterFirst
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: NodePort
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
