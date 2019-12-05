@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	endpoint := "oss-cn-north-1.unicloudsrv.com"
+	endpoint := "https://oss-cn-north-1.unicloudsrv.com"
 	region := "oss-cn-north-1"
 	// len 16 access key
 	accessKey := "<16 chars access key>"
