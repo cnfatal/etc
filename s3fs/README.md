@@ -30,8 +30,7 @@ fatalc/s3fs:v1.85
 
 以 sidecar 加 emptyDir 方式，sidecar 提供 s3fs 将 s3 存储转换为文件系统并在Pod内共享。
 
+[kubernetes.yaml](kubernetes.yaml)
+
 注意⚠️：
  - 由于使用的 ssl ，要求容器内时间不能与对象存储服务器时间相差太远
- - 
-
-[kubernetes.yaml](kubernetes.yaml)
