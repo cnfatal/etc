@@ -3,12 +3,10 @@
 set -e
 
 # proxy for script
-export http_proxy=http://10.0.111.65:1087
-export https_proxy=http://10.0.111.65:1087
 
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
-usermod -aG docker $(id -un)
+usermod -aG docker vagrant
 
 cat > /etc/docker/daemon.json <<EOF
 {
